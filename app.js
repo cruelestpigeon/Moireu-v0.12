@@ -1,6 +1,6 @@
-//* -------------------------------------------------
-   Moireu v0.12-Full (Merged v0.1 + v0.12 Features)
--------------------------------------------------- */
+/* ------------------------------
+   Moireu v0.12-Fixed
+------------------------------- */
 
 let appState = {
     posts: [],
@@ -16,7 +16,7 @@ let appState = {
 
 
 /* --------------------------
-   SIDEBAR CONTROL (v0.12)
+   SIDEBAR
 --------------------------- */
 function toggleSidebar() {
     document.getElementById("sidebar").classList.toggle("show");
@@ -24,35 +24,44 @@ function toggleSidebar() {
 
 
 /* --------------------------
-   TAB SYSTEM (from v0.1)
+   TAB SWITCHING 
 --------------------------- */
 function openTab(id) {
-    document.querySelectorAll(".tab").forEach(t => t.classList.add("hidden"));
+
+    // Hide all tabs
+    document.querySelectorAll(".tab").forEach(tab => {
+        tab.classList.add("hidden");
+    });
+
+    // Show selected tab
     document.getElementById(id).classList.remove("hidden");
+
+    // Close sidebar for mobile ease
+    document.getElementById("sidebar").classList.remove("show");
 }
 
 
 /* --------------------------
-   FEED LOADING
+   LOAD FEED
 --------------------------- */
 function loadFeed() {
     const feed = document.getElementById("feed");
     feed.innerHTML = "";
 
     appState.posts.forEach(p => {
-        let card = document.createElement("div");
-        card.className = "post";
+        let postEl = document.createElement("div");
+        postEl.className = "post";
 
-        card.innerHTML = `
+        postEl.innerHTML = `
             <strong>${p.display}</strong><br>
-            <span class="username">@${p.user}</span>
+            <span>@${p.user}</span>
             <hr>
             <p>${p.text}</p>
             <hr>
-            <span>♡ ${p.likes} | ⇄ | ⌯⌲ ${p.replies}</span>
+            <span>♡ ${p.likes} | ⌯⌲ ${p.replies}</span>
         `;
 
-        feed.appendChild(card);
+        feed.appendChild(postEl);
     });
 }
 
@@ -68,12 +77,13 @@ function submitPost() {
         display: appState.profile.name,
         user: appState.profile.user,
         text,
-        likes: 0,
-        replies: 0
+        likes: Math.floor(Math.random() * 120),
+        replies: Math.floor(Math.random() * 80)
     });
 
     document.getElementById("postText").value = "";
     loadFeed();
+    openTab("feedTab");
 }
 
 
@@ -84,14 +94,17 @@ function saveProfile() {
     appState.profile.name = document.getElementById("profileName").value;
     appState.profile.user = document.getElementById("profileUser").value;
     appState.profile.bio = document.getElementById("profileBio").value;
+
+    alert("Profile saved!");
+    openTab("feedTab");
 }
 
 
 /* --------------------------
-   DIRECT MESSAGES
+   DM
 --------------------------- */
 function sendDM() {
-    alert("DM sent! (placeholder logic)");
+    alert("DM sent!");
 }
 
 
@@ -104,12 +117,14 @@ function createEvent() {
 
     appState.events.push(text);
     document.getElementById("eventText").value = "";
+
     renderEvents();
 }
 
 function renderEvents() {
     const box = document.getElementById("eventList");
     box.innerHTML = "";
+
     appState.events.forEach(e => {
         box.innerHTML += `<div class="post">${e}</div>`;
     });
@@ -125,12 +140,14 @@ function addCharacter() {
 
     appState.characters.push(text);
     document.getElementById("characterText").value = "";
+
     renderCharacters();
 }
 
 function renderCharacters() {
     const box = document.getElementById("characterList");
     box.innerHTML = "";
+
     appState.characters.forEach(c => {
         box.innerHTML += `<div class="post">${c}</div>`;
     });
@@ -146,12 +163,14 @@ function addLore() {
 
     appState.lore.push(text);
     document.getElementById("loreText").value = "";
+
     renderLore();
 }
 
 function renderLore() {
     const box = document.getElementById("loreList");
     box.innerHTML = "";
+
     appState.lore.forEach(l => {
         box.innerHTML += `<div class="post">${l}</div>`;
     });
@@ -159,19 +178,16 @@ function renderLore() {
 
 
 /* --------------------------
-   INITIAL DATA
---------------------------- */
-appState.posts.push({
-    display: "Aria",
-    user: "aria",
-    text: "Welcome to Moireu v0.12-Full 🌸🌿",
-    likes: 120,
-    replies: 25
-});
-
-/* --------------------------
    INIT
 --------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
+    appState.posts.push({
+        display: "Aria",
+        user: "aria",
+        text: "Welcome to Moireu v0.12 🌸",
+        likes: 120,
+        replies: 18
+    });
+
     loadFeed();
 });

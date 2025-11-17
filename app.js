@@ -1,7 +1,7 @@
-/* Moireu v0.1 implementation (client-side SPA)
-   - localStorage persistence
-   - posts, characters, profiles, DMs
-   - iPhone-safe and pale pastel pink theme
+/* Moireu v1.5 implementation (client-side SPA) — Cutified visuals
+   - Behavior unchanged from v1.5 base
+   - Visual changes: save button labels, profile visual styling & username prefix
+   - Colors and styling are handled in styles.css (strict palette)
 */
 
 /* ---------- Utilities ---------- */
@@ -12,7 +12,7 @@ const randBetween = (a,b) => { a=Number(a)||0; b=Number(b)||0; if(a>b)[a,b]=[b,a
 const escapeHTML = s => (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
 /* ---------- Storage model ---------- */
-const STORAGE_KEY = 'moireu_v0.1_state';
+const STORAGE_KEY = 'moireu_v1.5_state';
 function loadState(){
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -26,11 +26,12 @@ function seedState(){
   const p_a = { id: 'p_aria', displayName:'Aria', username:'aria', bio:'Wandering bard', description:'Plays lute.', relationships:'friend of You', followers:128, likesMin:20, likesMax:400, createdAt: now() };
   const posts = [
     { id: 'post_'+Math.random().toString(36).slice(2,9), profileId: p_a.id, displayName: p_a.displayName, username: p_a.username, content:'Hello world! **I sing** tonight. #bard', likes: randBetween(p_a.likesMin,p_a.likesMax), replies: randBetween(5,250), createdAt: now() },
-    { id: 'post_'+Math.random().toString(36).slice(2,9), profileId: p_me.id, displayName: p_me.displayName, username: p_me.username, content:'Starting Moireu v0.1 — *client-only*!', likes: randBetween(p_me.likesMin,p_me.likesMax), replies: randBetween(5,250), createdAt: now() }
+    { id: 'post_'+Math.random().toString(36).slice(2,9), profileId: p_me.id, displayName: p_me.displayName, username: p_me.username, content:'Starting Moireu v1.5 — *client-only*!', likes: randBetween(p_me.likesMin,p_me.likesMax), replies: randBetween(5,250), createdAt: now() }
   ];
   const dms = {};
   dms['dm_aria'] = { participants: [p_me.username, p_a.username], messages: [{ id:'m_'+Math.random().toString(36).slice(2,9), from:p_a.username, text:'Hey! Want to RP?', createdAt: now() }] };
-  return { profiles: [p_me,p_a], posts, dms, myProfileId: p_me.id };
+  const universeText = "Welcome to this universe. Describe the setting here.";
+  return { profiles: [p_me,p_a], posts, dms, myProfileId: p_me.id, universeText };
 }
 
 let state = loadState();
@@ -67,6 +68,7 @@ function openView(viewId){
   if(viewId === 'feedTab') renderFeed();
   if(viewId === 'charactersTab') renderCharacterList();
   if(viewId === 'dmsTab') renderDMList();
+  if(viewId === 'universeTab') renderUniverse();
 }
 
 /* default view */
@@ -109,15 +111,13 @@ function renderFeed(){
   }));
 }
 
-/* open profile by username; if not exist create? opens profile editor */
+/* open profile by username; if not exist create? loads profile editor */
 function openProfileByUsername(username){
   const prof = state.profiles.find(p=>p.username===username);
   if(prof) {
-    // load into profileTab for viewing/editing
     loadProfileIntoEditor(prof);
     openView('profileTab');
   } else {
-    // if username not found, open profileTab blank with username prefilled
     loadProfileIntoEditor({ id: null, displayName:'', username, bio:'', description:'', relationships:'', followers:0, likesMin:1, likesMax:25 });
     openView('profileTab');
   }
@@ -182,9 +182,9 @@ function renderCharacterList(){
   }
 }
 
-/* ---------- PROFILE editor ---------- */
+/* ---------- PROFILE editor (load/save keep same behavior) ---------- */
 function loadProfileIntoEditor(profile){
-  // profile can be an object (existing or new)
+  // fill inputs exactly as before (behavior unchanged)
   $('#profile-displayName').value = profile.displayName || '';
   $('#profile-username').value = profile.username || '';
   $('#profile-bio').value = profile.bio || '';
@@ -198,7 +198,8 @@ function loadProfileIntoEditor(profile){
   $('#profileTab').dataset.editingUsername = profile.username || '';
   $('#profileTab').dataset.editingId = profile.id || '';
 }
-
+  
+/* Save profile — behavior unchanged; only label is different in HTML */
 $('#btn-save-profile').addEventListener('click', ()=>{
   const uname = ($('#profile-username').value||'').trim().replace(/^@/,'');
   if(!uname){ alert('Username required'); return; }
@@ -271,8 +272,6 @@ $('#btn-open-dm').addEventListener('click', ()=>{
 
 /* ---------- MY PROFILE behavior (nav first-time) ---------- */
 $('.nav-btn[data-target="feedTab"]').addEventListener('click', ()=>{
-  // this button in sidebar is actually MY PROFILE in original spec: clicking opens MY PROFILE
-  // If myProfileId exists, open that profile else open profileTab blank to create
   const me = state.profiles.find(p=>p.id === state.myProfileId);
   if(me) { loadProfileIntoEditor(me); openView('profileTab'); }
   else { loadProfileIntoEditor({id:null, displayName:'', username:'', bio:'', description:'', relationships:'', followers:0, likesMin:1, likesMax:25}); openView('profileTab'); }
@@ -282,7 +281,6 @@ $('.nav-btn[data-target="feedTab"]').addEventListener('click', ()=>{
 function renderDMList(){
   const container = $('#conversationsContainer');
   container.innerHTML = '';
-  // produce clickable conversations from state.dms
   const convs = Object.entries(state.dms).map(([id,conv])=>{
     const last = conv.messages && conv.messages.length ? conv.messages[conv.messages.length-1].createdAt : '';
     return { id, conv, last };
@@ -312,9 +310,7 @@ function openDMWith(username){
 }
 
 function openDM(key, other){
-  // set title
   $('#dmTitle').textContent = (state.profiles.find(p=>p.username===other)?.displayName || other) + ' @' + other;
-  // load messages
   const conv = state.dms[key];
   const box = $('#dmMessages');
   box.innerHTML = '';
@@ -325,7 +321,6 @@ function openDM(key, other){
     el.innerHTML += `<div class="txt">${escapeHTML(m.text)}</div>`;
     box.appendChild(el);
   }
-  // wire send
   $('#dmSend').onclick = () => {
     const text = $('#dmInput').value.trim();
     if(!text) return;
@@ -334,10 +329,25 @@ function openDM(key, other){
     saveState();
     $('#dmInput').value = '';
     openView('dmTab');
-    openDM(key, other); // re-open to refresh messages
+    openDM(key, other);
   };
   openView('dmTab');
 }
+
+/* ---------- UNIVERSE (v1.5) ---------- */
+function renderUniverse(){
+  $('#universeText').value = state.universeText || '';
+}
+$('#btn-save-universe').addEventListener('click', ()=>{
+  const text = $('#universeText').value || '';
+  state.universeText = text;
+  saveState();
+  // feedback: brief change of label (still within palette)
+  const btn = $('#btn-save-universe');
+  const old = btn.textContent;
+  btn.textContent = '[ ✧ Saved ]';
+  setTimeout(()=> btn.textContent = '[ ✧ ]', 900);
+});
 
 /* ---------- Helper ---------- */
 function getMyUsername(){ const me = state.profiles.find(p=>p.id === state.myProfileId); return me ? me.username : null; }
@@ -346,8 +356,8 @@ function getMyUsername(){ const me = state.profiles.find(p=>p.id === state.myPro
 renderFeed();
 renderCharacterList();
 renderDMList();
+renderUniverse();
 saveState();
 
 /* make sure feed updates when coming back */
 window.addEventListener('hashchange', ()=> openView(location.hash.replace('#','') || 'feedTab'));
-

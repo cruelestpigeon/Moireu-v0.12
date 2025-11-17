@@ -1,16 +1,15 @@
 /* -----------------------------
-   COLOR THEME — pastel pink + green + white
+   COLOR THEME (Pastel)
 ------------------------------ */
 :root {
     --bg: #ffffff;
-    --bg-soft: #fcfdfc;         /* nearly white green */
-    --accent: #e6fff4;          /* VERY pale green */
-    --accent2: #ffeef7;         /* SOFT pink */
-    --border: #f7dfe9;          /* pastel pink border */
+    --bg-soft: #fcfdfc;         
+    --accent: #e6fff4;          
+    --accent2: #ffeef7;         
+    --border: #f7dfe9;          
     --text: #444;
 }
 
-/* GLOBAL */
 body {
     background: var(--bg);
     color: var(--text);
@@ -32,10 +31,9 @@ body {
     cursor: pointer;
     font-size: 22px;
     padding: 4px 10px;
-    border-radius: 8px;
 }
 
-/* SIDEBAR (SLIDE-IN) */
+/* SLIDE-IN SIDEBAR */
 .sidebar {
     position: fixed;
     top: 0;
@@ -44,7 +42,6 @@ body {
     height: 100vh;
     background: var(--accent);
     border-left: 2px solid var(--border);
-    box-shadow: -3px 0px 9px rgba(0,0,0,0.05);
     transform: translateX(100%);
     transition: 0.3s ease-in-out;
     padding: 20px;
@@ -55,18 +52,6 @@ body {
     transform: translateX(0);
 }
 
-.sidebar-header {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.close-sidebar {
-    cursor: pointer;
-    font-size: 20px;
-    padding: 6px 8px;
-    border-radius: 6px;
-}
-
 .sidebar-links button {
     display: block;
     width: 100%;
@@ -75,10 +60,9 @@ body {
     background: var(--accent2);
     border: 1px solid var(--border);
     border-radius: 8px;
-    cursor: pointer;
 }
 
-/* CREATE POST BTN */
+/* CREATE POST BUTTON */
 .create-post-btn {
     background: var(--accent2);
     padding: 12px;
@@ -88,7 +72,6 @@ body {
     border-radius: 8px;
     border: 1px solid var(--border);
     font-weight: bold;
-    cursor: pointer;
 }
 
 /* FEED */
@@ -96,7 +79,7 @@ body {
     padding: 14px;
 }
 
-/* POST CARD */
+/* POSTS */
 .post {
     background: var(--bg-soft);
     border: 1px solid var(--border);
@@ -105,15 +88,20 @@ body {
     border-radius: 10px;
 }
 
-.username {
-    color: #888;
+/* TABS */
+.tab {
+    background: var(--accent);
+    border: 1px solid var(--border);
+    padding: 14px;
+    margin: 14px;
+    border-radius: 8px;
 }
 
-/* Buttons */
-button {
-    transition: 0.2s;
+.hidden {
+    display: none;
 }
 
+/* BUTTONS */
 button:hover {
     opacity: 0.8;
 }

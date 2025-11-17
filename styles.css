@@ -1,0 +1,119 @@
+/* -----------------------------
+   COLOR THEME — pastel pink + green + white
+------------------------------ */
+:root {
+    --bg: #ffffff;
+    --bg-soft: #fcfdfc;         /* nearly white green */
+    --accent: #e6fff4;          /* VERY pale green */
+    --accent2: #ffeef7;         /* SOFT pink */
+    --border: #f7dfe9;          /* pastel pink border */
+    --text: #444;
+}
+
+/* GLOBAL */
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 14px;
+    border-bottom: 2px solid var(--border);
+    background: var(--bg-soft);
+}
+
+.settings-icon {
+    cursor: pointer;
+    font-size: 22px;
+    padding: 4px 10px;
+    border-radius: 8px;
+}
+
+/* SIDEBAR (SLIDE-IN) */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 260px;
+    height: 100vh;
+    background: var(--accent);
+    border-left: 2px solid var(--border);
+    box-shadow: -3px 0px 9px rgba(0,0,0,0.05);
+    transform: translateX(100%);
+    transition: 0.3s ease-in-out;
+    padding: 20px;
+    z-index: 9999;
+}
+
+.sidebar.show {
+    transform: translateX(0);
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.close-sidebar {
+    cursor: pointer;
+    font-size: 20px;
+    padding: 6px 8px;
+    border-radius: 6px;
+}
+
+.sidebar-links button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    background: var(--accent2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* CREATE POST BTN */
+.create-post-btn {
+    background: var(--accent2);
+    padding: 12px;
+    width: 95%;
+    margin: 12px auto;
+    display: block;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* FEED */
+.feed {
+    padding: 14px;
+}
+
+/* POST CARD */
+.post {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    padding: 12px;
+    margin-bottom: 18px;
+    border-radius: 10px;
+}
+
+.username {
+    color: #888;
+}
+
+/* Buttons */
+button {
+    transition: 0.2s;
+}
+
+button:hover {
+    opacity: 0.8;
+}

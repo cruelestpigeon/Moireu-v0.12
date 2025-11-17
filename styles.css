@@ -1,21 +1,23 @@
 /* -----------------------------
-   COLOR THEME (Pastel)
+   PASTEL THEME
 ------------------------------ */
+
 :root {
     --bg: #ffffff;
-    --bg-soft: #fcfdfc;         
-    --accent: #e6fff4;          
-    --accent2: #ffeef7;         
-    --border: #f7dfe9;          
+    --bg-soft: #fefefe;
+
+    --accent: #fff4fa;      /* pink white */
+    --accent2: #f3fff7;     /* mint white */
+    --border: #f2dce9;
+
     --text: #444;
 }
 
 body {
     background: var(--bg);
-    color: var(--text);
-    font-family: "Inter", sans-serif;
     margin: 0;
-    padding: 0;
+    font-family: "Inter", sans-serif;
+    color: var(--text);
 }
 
 /* HEADER */
@@ -24,28 +26,26 @@ body {
     justify-content: space-between;
     padding: 14px;
     border-bottom: 2px solid var(--border);
-    background: var(--bg-soft);
 }
 
 .settings-icon {
     cursor: pointer;
     font-size: 22px;
-    padding: 4px 10px;
 }
 
-/* SLIDE-IN SIDEBAR */
+/* SIDEBAR */
 .sidebar {
     position: fixed;
     top: 0;
     right: 0;
     width: 260px;
-    height: 100vh;
+    height: 100%;
     background: var(--accent);
     border-left: 2px solid var(--border);
     transform: translateX(100%);
-    transition: 0.3s ease-in-out;
+    transition: .3s ease;
     padding: 20px;
-    z-index: 9999;
+    z-index: 999;
 }
 
 .sidebar.show {
@@ -53,55 +53,41 @@ body {
 }
 
 .sidebar-links button {
-    display: block;
     width: 100%;
     padding: 12px;
-    margin-bottom: 10px;
+    margin: 6px 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
     background: var(--accent2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
 }
 
-/* CREATE POST BUTTON */
-.create-post-btn {
-    background: var(--accent2);
-    padding: 12px;
-    width: 95%;
-    margin: 12px auto;
-    display: block;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    font-weight: bold;
-}
-
-/* FEED */
-.feed {
-    padding: 14px;
-}
-
-/* POSTS */
-.post {
-    background: var(--bg-soft);
-    border: 1px solid var(--border);
-    padding: 12px;
-    margin-bottom: 18px;
-    border-radius: 10px;
-}
 
 /* TABS */
 .tab {
-    background: var(--accent);
-    border: 1px solid var(--border);
     padding: 14px;
-    margin: 14px;
-    border-radius: 8px;
 }
 
 .hidden {
     display: none;
 }
 
-/* BUTTONS */
-button:hover {
-    opacity: 0.8;
+
+/* CREATE POST BUTTON */
+.create-post-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    background: var(--accent2);
+    border: 1px solid var(--border);
+    margin-bottom: 14px;
+}
+
+
+/* POSTS */
+.post {
+    background: var(--bg-soft);
+    padding: 12px;
+    margin-bottom: 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
 }

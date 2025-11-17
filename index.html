@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Moireu v0.1 (Pastel Pink)</title>
+  <title>Moireu v1.5 (Pastel Pink — Cutified)</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -17,7 +17,8 @@
         <div class="brand">Moireu</div>
       </div>
       <div class="top-actions">
-        <button id="btn-create-post" class="primary-btn">[ CREATE POST ]</button>
+        <!-- Label updated per v1.5 spec -->
+        <button id="btn-create-post" class="primary-btn">[ CREATE POST ? ]</button>
       </div>
     </header>
 
@@ -84,47 +85,80 @@
         <div class="panel profile">
           <div class="panel-head">
             <button class="back-btn" data-target="charactersTab">←</button>
+            <h2 class="visually-profile-title">PROFILE</h2>
           </div>
 
-          <input id="profile-displayName" placeholder="Display Name" />
-          <input id="profile-username" placeholder="Username (no @)" />
-          <textarea id="profile-bio" rows="2" placeholder="Bio text"></textarea>
+          <!-- Display Name (styled to be prominent) -->
+          <input id="profile-displayName" class="profile-displayName" placeholder="Display Name" />
 
-          <div class="meta-row">
+          <!-- Username: visual @ prefix + lighter text; input behavior unchanged -->
+          <div class="username-wrap">
+            <input id="profile-username" class="profile-username" placeholder="username (no @)" />
+          </div>
+
+          <!-- Bio -->
+          <textarea id="profile-bio" rows="2" class="profile-bio" placeholder="Bio text"></textarea>
+
+          <div class="meta-row profile-meta">
+            <!-- DM icon -->
             <button id="btn-open-dm" class="icon-btn">✉︎</button>
-            <label>Followers <input id="profile-followers" type="number" min="0" /></label>
+
+            <!-- Follower input first, then static "Followers" text -->
+            <div class="followers-wrap">
+              <input id="profile-followers" type="number" min="0" class="profile-followers" />
+              <span class="followers-label">Followers</span>
+            </div>
           </div>
 
-          <label>❀ | DESCRIPTION:</label>
-          <textarea id="profile-description" rows="3"></textarea>
+          <label class="section-label">❀ | DESCRIPTION:</label>
+          <textarea id="profile-description" class="profile-description" rows="3"></textarea>
 
-          <label>❀ | RELATIONSHIPS:</label>
-          <textarea id="profile-relationships" rows="3"></textarea>
+          <label class="section-label">❀ | RELATIONSHIPS:</label>
+          <textarea id="profile-relationships" class="profile-relationships" rows="3"></textarea>
 
           <div class="meta-row">
-            <label>❀ | POPULARITY: LIKES =</label>
+            <label class="section-label">❀ | POPULARITY: LIKES =</label>
             <input id="profile-likes-min" type="number" placeholder="min" />
-            <span>to</span>
+            <span class="to-text">to</span>
             <input id="profile-likes-max" type="number" placeholder="max" />
           </div>
 
           <div class="actions">
-            <button id="btn-save-profile" class="primary-btn">[ SAVE ]</button>
+            <!-- Save button text changed to match task -->
+            <button id="btn-save-profile" class="primary-btn">[ ✧ ]</button>
             <button id="btn-delete-profile" class="link-btn">Delete</button>
           </div>
         </div>
       </section>
 
-      <!-- MY PROFILE quick access -->
-      <section id="myProfileQuick" class="view hidden">
-        <!-- reserved if prefer separate view -->
+      <!-- UNIVERSE (v1.5) -->
+      <section id="universeTab" class="view hidden">
+        <div class="panel">
+          <div class="panel-head">
+            <button class="back-btn" data-target="feedTab">←</button>
+            <h2>UNIVERSE</h2>
+          </div>
+
+          <label class="sr-only" for="universeText">Universe Description</label>
+          <textarea id="universeText" rows="8" placeholder="Write the universe description here..."></textarea>
+          <div class="actions">
+            <!-- Use same "✧" save style -->
+            <button id="btn-save-universe" class="primary-btn">[ ✧ ]</button>
+          </div>
+        </div>
       </section>
 
-      <!-- DIRECT MESSAGES list -->
+      <!-- MY PROFILE quick access -->
+      <section id="myProfileQuick" class="view hidden"></section>
+
+      <!-- DIRECT MESSAGES list (updated header/back button) -->
       <section id="dmsTab" class="view hidden">
         <div class="panel">
-          <h2>DIRECT MESSAGES</h2>
-          <div class="actions"><button id="btn-new-conversation" class="primary-btn">❀  | [ NEW CONVERSATION ]</button></div>
+          <div class="panel-head">
+            <button class="back-btn" data-target="feedTab">←</button>
+            <h2>DIRECT MESSAGES</h2>
+          </div>
+          <div class="actions"><button id="btn-new-conversation" class="primary-btn">❀  | NEW CONVERSATION ?</button></div>
           <div id="conversationsContainer" class="list"></div>
         </div>
       </section>
@@ -152,14 +186,6 @@
         </div>
       </section>
 
-      <!-- UNIVERSE (placeholder) -->
-      <section id="universeTab" class="view hidden">
-        <div class="panel">
-          <h2>Universe</h2>
-          <p>(Universe UI placeholder)</p>
-        </div>
-      </section>
-
       <!-- SETTINGS (placeholder) -->
       <section id="settingsTab" class="view hidden">
         <div class="panel">
@@ -174,4 +200,3 @@
 <script src="app.js"></script>
 </body>
 </html>
-

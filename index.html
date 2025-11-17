@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Moireu v0.12</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- SIDEBAR (now mobile-friendly slide-in panel) -->
+    <div id="sidebar" class="sidebar hidden">
+        <div class="sidebar-header">
+            <span class="close-sidebar" onclick="toggleSidebar()">✖</span>
+        </div>
+
+        <div class="sidebar-links">
+            <button onclick="openTab('myProfile')">❀ | MY PROFILE</button>
+            <button onclick="openTab('dmList')">❀ | DIRECT MESSAGES</button>
+            <button onclick="openTab('events')">❀ | EVENTS</button>
+            <button onclick="openTab('characters')">❀ | CHARACTERS</button>
+            <button onclick="openTab('universe')">❀ | UNIVERSE</button>
+            <button onclick="openTab('settings')">❀ | SETTINGS</button>
+        </div>
+    </div>
+
+    <!-- MAIN APP CONTAINER -->
+    <div id="app">
+
+        <!-- GLOBAL FEED HEADER -->
+        <div class="header">
+            <h1>GLOBAL FEED</h1>
+            <span class="settings-icon" onclick="toggleSidebar()">⚙︎</span>
+        </div>
+
+        <!-- CREATE POST BUTTON -->
+        <button class="create-post-btn" onclick="openTab('createPost')">CREATE POST</button>
+
+        <!-- FEED -->
+        <div id="feed" class="feed"></div>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

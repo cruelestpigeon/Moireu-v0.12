@@ -1,93 +1,76 @@
-/* -----------------------------
-   PASTEL THEME
------------------------------- */
+/* Moireu v0.1 — Pale Pastel Pink Theme, iPhone-safe */
+/* Keep styles simple and touch-friendly */
 
+/* Safe area support */
 :root {
-    --bg: #ffffff;
-    --bg-soft: #fefefe;
-
-    --accent: #fff4fa;      /* pink white */
-    --accent2: #f3fff7;     /* mint white */
-    --border: #f2dce9;
-
-    --text: #444;
+  --safe-top: env(safe-area-inset-top);
+  --safe-bottom: env(safe-area-inset-bottom);
+  --bg: #fffafc; /* very pale pink-white */
+  --panel: #fffdfd;
+  --muted: #9b8e95;
+  --accent: #ffeef6; /* pale pink accent */
+  --primary: #ff9fc4; /* soft pink for buttons (very pale) */
+  --border: #ffe6ee;
+  --text: #2b2b2b;
 }
 
-body {
-    background: var(--bg);
-    margin: 0;
-    font-family: "Inter", sans-serif;
-    color: var(--text);
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;}
+
+/* Topbar */
+.topbar{
+  position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;padding-top:calc(12px + var(--safe-top));background:var(--panel);border-bottom:1px solid var(--border);z-index:50;
 }
+.brand{font-weight:700;font-size:18px;margin-left:8px}
+.icon-btn{background:transparent;border:0;padding:8px;font-size:18px;border-radius:8px;cursor:pointer}
+.primary-btn{background:var(--primary);border:1px solid var(--border);color: #2b2b2b;padding:10px 12px;border-radius:10px;font-weight:600;cursor:pointer}
+.link-btn{background:transparent;border:0;color:var(--muted);cursor:pointer;padding:8px}
 
-/* HEADER */
-.header {
-    display: flex;
-    justify-content: space-between;
-    padding: 14px;
-    border-bottom: 2px solid var(--border);
+/* Sidebar */
+.sidebar{
+  position:fixed;left:0;top:0;bottom:0;width:260px;background:var(--panel);border-right:1px solid var(--border);padding:18px;transform:translateX(-110%);transition:transform .28s ease;z-index:60;
 }
+.sidebar.show{transform:translateX(0)}
+.nav-btn{display:block;width:100%;text-align:left;padding:10px;border-radius:8px;border:1px solid transparent;background:transparent;margin-bottom:8px;cursor:pointer}
+.nav-btn:hover{background:var(--accent);border-color:var(--border)}
 
-.settings-icon {
-    cursor: pointer;
-    font-size: 22px;
-}
+/* Main view root */
+.view-root{padding:16px;padding-bottom:calc(40px + var(--safe-bottom));}
 
-/* SIDEBAR */
-.sidebar {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 260px;
-    height: 100%;
-    background: var(--accent);
-    border-left: 2px solid var(--border);
-    transform: translateX(100%);
-    transition: .3s ease;
-    padding: 20px;
-    z-index: 999;
-}
+/* Panels */
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:12px;box-shadow:0 6px 14px rgba(0,0,0,0.03)}
+.panel-title{font-weight:700;margin:0 0 8px 0}
 
-.sidebar.show {
-    transform: translateX(0);
-}
+/* Posts list */
+.posts{display:flex;flex-direction:column;gap:12px}
+.post{padding:10px;border-radius:10px;background:#fff; border:1px solid var(--border)}
+.post .meta{color:var(--muted);font-size:13px;margin-bottom:6px}
+.post .content{white-space:pre-wrap;margin-bottom:8px}
+.post .actions{display:flex;gap:12px;align-items:center;color:var(--muted);font-size:14px}
 
-.sidebar-links button {
-    width: 100%;
-    padding: 12px;
-    margin: 6px 0;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    background: var(--accent2);
-}
+/* Editor */
+.editor input, .editor textarea, .profile input, .profile textarea{width:100%;padding:10px;border-radius:8px;border:1px solid var(--border);background:transparent;margin-bottom:8px;resize:vertical}
+.meta-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 
+/* Lists */
+.list .item{padding:10px;border-radius:8px;border:1px solid var(--border);background:var(--panel);margin-bottom:8px;cursor:pointer}
 
-/* TABS */
-.tab {
-    padding: 14px;
-}
+/* DM */
+.dm-messages{height:300px;overflow:auto;padding:8px;display:flex;flex-direction:column;gap:8px}
+.msg{max-width:80%;padding:10px;border-radius:14px}
+.msg.left{align-self:flex-start;background:var(--accent);color:var(--text)}
+.msg.left .who{font-weight:600;font-size:12px;color:var(--muted);margin-bottom:6px}
+.msg.right{align-self:flex-end;background:linear-gradient(180deg,var(--primary),#ffd3e6);color:var(--text)}
+.dm-composer{display:flex;gap:8px;align-items:flex-end;margin-top:10px}
+.dm-composer textarea{flex:1;padding:10px;border-radius:10px;border:1px solid var(--border)}
 
-.hidden {
-    display: none;
-}
+/* helpers */
+.hidden{display:none}
+.back-btn{background:transparent;border:0;font-size:18px;padding:6px;border-radius:6px;cursor:pointer}
 
-
-/* CREATE POST BUTTON */
-.create-post-btn {
-    width: 100%;
-    padding: 12px;
-    border-radius: 6px;
-    background: var(--accent2);
-    border: 1px solid var(--border);
-    margin-bottom: 14px;
-}
-
-
-/* POSTS */
-.post {
-    background: var(--bg-soft);
-    padding: 12px;
-    margin-bottom: 14px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
+/* Responsive */
+@media (max-width:640px){
+  .view-root{padding:12px}
+  .post{font-size:15px}
+  .primary-btn{padding:12px}
 }
